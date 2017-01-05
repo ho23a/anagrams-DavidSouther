@@ -54,11 +54,13 @@ public class AnagramsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anagrams);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         AssetManager assetManager = getAssets();
         try {
             InputStream inputStream = assetManager.open("words.txt");
             dictionary = new AnagramDictionary(inputStream);
         } catch (IOException e) {
+            // Android notification/alert at the bottom of the phone screen
             Toast toast = Toast.makeText(this, "Could not load dictionary", Toast.LENGTH_LONG);
             toast.show();
         }

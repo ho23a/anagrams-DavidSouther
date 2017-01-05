@@ -41,48 +41,42 @@ public class AnagramDictionary {
     private Random random = new Random();
 
     private HashMap<String, ArrayList<String>> lettersToWord = new HashMap<>();
+    private List<String> dictionary = new ArrayList<>();
 
     public AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
         String line;
         while((line = in.readLine()) != null) {
             String word = line.trim();
-            //
-            //  Your code here
-            //
+            dictionary.add(word);
         }
     }
 
+    // true when word is base's anagram but word is not base
     public boolean isGoodWord(String word, String base) {
-        //
-        // Your code here
-        //
-        return true;
+        return isAnagram(word.toUpperCase(), base.toUpperCase()) && !word.equals(base);
     }
 
     public List<String> getAnagrams(String targetWord) {
         ArrayList<String> result = new ArrayList<String>();
-        //
-        // Your code here
-        //
+        for (String word: dictionary) {
+            if (isAnagram(word, targetWord)) {
+                result.add(word);
+            }
+        }
         return result;
     }
 
     @VisibleForTesting
     static boolean isAnagram(String first, String second) {
-        //
-        // Your code here
-        //
-        return true;
+        return sortLetters(first).equals(sortLetters(second));
     }
 
     @VisibleForTesting
     static String sortLetters(String input) {
         char[] chars = input.toCharArray();
-        //
-        // Your code here
-        //
-        return "";
+        Arrays.sort(chars);
+        return new String(chars);
     }
 
     public List<String> getAnagramsWithOneMoreLetter(String word) {
@@ -90,7 +84,7 @@ public class AnagramDictionary {
         //
         // Your code here
         //
-        return result;
+        return getAnagrams(word);
     }
 
     public String pickGoodStarterWord() {
