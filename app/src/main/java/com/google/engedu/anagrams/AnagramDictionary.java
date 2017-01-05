@@ -49,6 +49,12 @@ public class AnagramDictionary {
         while((line = in.readLine()) != null) {
             String word = line.trim();
             dictionary.add(word);
+
+            String temp = sortLetters(word);
+            if (!lettersToWord.containsKey(temp)) {
+                lettersToWord.put(temp, new ArrayList<String>());
+            }
+            lettersToWord.get(temp).add(word);
         }
     }
 
@@ -58,13 +64,11 @@ public class AnagramDictionary {
     }
 
     public List<String> getAnagrams(String targetWord) {
-        ArrayList<String> result = new ArrayList<String>();
-        for (String word: dictionary) {
-            if (isAnagram(word, targetWord)) {
-                result.add(word);
-            }
+        String sorted = sortLetters(targetWord);
+        if (!lettersToWord.containsKey(sorted)) {
+            return new ArrayList<>();
         }
-        return result;
+        return lettersToWord.get(sorted);
     }
 
     @VisibleForTesting
@@ -81,10 +85,11 @@ public class AnagramDictionary {
 
     public List<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
-        //
-        // Your code here
-        //
-        return getAnagrams(word);
+
+        for (char character='a'; character<='z'; character++) {
+            result.addAll(getAnagrams(word + character));
+        }
+        return result;
     }
 
     public String pickGoodStarterWord() {
