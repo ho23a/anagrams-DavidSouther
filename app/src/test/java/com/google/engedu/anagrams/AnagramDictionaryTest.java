@@ -75,5 +75,14 @@ public class AnagramDictionaryTest {
     @Test
     public void testIsGoodWord() {
        // TODO: This may need to be in AndroidTest
+        assertTrue(anagrams.isGoodWord("typos", "typo"));
+    }
+
+    @Test
+    // not working because no word has at least 5 anagrams
+    public void testPickGoodStarterWord() {
+        String starter = anagrams.pickGoodStarterWord();
+        System.out.println(starter);
+        System.out.println(anagrams.getAnagramsWithOneMoreLetter(starter));
     }
 }

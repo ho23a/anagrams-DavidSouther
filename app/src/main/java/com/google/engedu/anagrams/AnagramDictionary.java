@@ -58,9 +58,9 @@ public class AnagramDictionary {
         }
     }
 
-    // true when word is base's anagram but word is not base
+    // true when word is base's anagram with one more letter
     public boolean isGoodWord(String word, String base) {
-        return isAnagram(word.toUpperCase(), base.toUpperCase()) && !word.equals(base);
+        return getAnagramsWithOneMoreLetter(base).contains(word);
     }
 
     public List<String> getAnagrams(String targetWord) {
@@ -92,10 +92,26 @@ public class AnagramDictionary {
         return result;
     }
 
+    // good = length from 3-7 and at least 5 anagrams
     public String pickGoodStarterWord() {
-        //
-        // Your code here
-        //
-        return "stop";
+        String word = dictionary.get(random.nextInt(dictionary.size()));
+
+        while (getAnagramsWithOneMoreLetter(word).size() < MIN_NUM_ANAGRAMS
+                || word.length() < DEFAULT_WORD_LENGTH || word.length() > MAX_WORD_LENGTH) {
+            word = dictionary.get(random.nextInt(dictionary.size()));
+        }
+        return word;
+
+//        Another way:
+//        String word;
+//        List<String> anagrams = new ArrayList<>();
+//        do {
+//            word = dictionary.get(random.nextInt(dictionary.size()));
+//            if (word.length() < DEFAULT_WORD_LENGTH || word.length() > MAX_WORD_LENGTH) {
+//                continue;
+//            }
+//            anagrams = getAnagramsWithOneMoreLetter(word);
+//        } while (anagrams.size() < MIN_NUM_ANAGRAMS);
+//        return word;
     }
 }
